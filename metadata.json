@@ -1,0 +1,44 @@
+{
+  "name": "sematext-spm_monitor",
+  "version": "0.8.0",
+  "author": "Ciprian Hacman (<ciprian.hacman@sematext.com>)",
+  "summary": "Install and configure SPM Monitor",
+  "description": "This will install and configure the Sematextext SPM Monitor. Sign up and get your SPM Token at: https://apps.sematext.com",
+  "license": "Apache 2.0",
+  "source": "http://sematext.com",
+  "project_page": "http://sematext.com",
+  "issues_url": "http://sematext.com",
+  "dependencies": [
+    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "7",
+        "8"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "12.04",
+        "14.04"
+      ]
+    }
+  ]
+}
