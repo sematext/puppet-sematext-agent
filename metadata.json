@@ -1,6 +1,6 @@
 {
   "name": "sematext-spm_monitor",
-  "version": "0.8.0",
+  "version": "1.0.0",
   "author": "Ciprian Hacman (<ciprian.hacman@sematext.com>)",
   "summary": "Install and configure SPM Monitor",
   "description": "This will install and configure the Sematextext SPM Monitor. Sign up and get your SPM Token at: https://apps.sematext.com",
@@ -29,15 +29,15 @@
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
-        "7",
-        "8"
+        "8",
+        "9"
       ]
     },
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
-        "12.04",
-        "14.04"
+        "16.04",
+        "18.04"
       ]
     }
   ]

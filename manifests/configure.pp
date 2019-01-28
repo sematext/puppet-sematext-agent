@@ -4,193 +4,133 @@
 #
 # === Parameters
 #
-# [*spm_token*]
-#   SPM Token unique to each SPM application
+# [*monitoring_token*]
+#   Monitoring Token unique to each application
 #
-# [*spm_type*]
-#   SPM application type (apache, haproxy, javaagent, ...)
+# [*infra_token*]
+#   Infra Token unique to each account
 #
-# [*apache_stats_url*]
-#   Apache server status URL provided by mod_status
+# [*app_type*]
+#   Agent type (standalone, javaagent)
 #
-# [*apache_user*]
-#   User needed to acces the info provided by mod_status
+# [*app_type*]
+#   Application type (mysql, elasticsearch, zookeeper, kafka, ...)
 #
-# [*apache_pass*]
-#   Password needed to acces the info provided by mod_status
+# [*app_name*]
+#   Application name used when more than one application runs on the same host
 #
-# [*haproxy_stats_url*]
-#   HAProxy stats URL
-#
-# [*java_app_type*]
-#   SPM Java application type (es, kafka, zk, ...)
-#
-# [*java_app_subtype*]
-#   SPM Java application subtype (kafka-broker, kafka-producer, kafka-consumer, ...)
-#
-# [*java_jvm_name*]
-#   SPM Java JVM name
-#
-# [*java_tracing*]
-#   SPM tracing for Java aplications (true or false)
-#
-# [*java_jmx_params*]
-#   SPM JMX parameters for standalone applications
-#
-# [*memcached_port*]
-#   Port on which memcached is listening
-#
-# [*mysql_user*]
-#   MySQL user needed to access the server
-#
-# [*mysql_pass*]
-#   MySQL password needed to access the server
-#
-# [*mysql_host*]
-#   MySQL server hostname
-#
-# [*mysql_port*]
-#   MySQL port on which the server is listening
-#
-# [*nginx_stats_url*]
-#   Nginx server status URL
-#
-# [*nginx_user*]
-#   User needed to acces the info provided Nginx
-#
-# [*nginx_pass*]
-#   Password needed to acces the info provided Nginx
-#
-# [*nginx_plus_stats_url*]
-#   Nginx Plus server status URL
+# [*args*]
+#   Extra arguments hash for each application type
 #
 #
 # === Examples
 #
 #  class { 'spm_monitor::configure':
-#    spm_token  => 'YOUR_TOKEN',
-#    spm_type   => 'mysql',
-#    mysql_user => 'spm-user',
-#    mysql_pass => 'spm-password',
-#    mysql_host => 'localhost',
-#    mysql_port => 3306,
+#    monitoring_token  => 'MONITORING_TOKEN',
+#    infra_token  => 'INFRA_TOKEN',
+#    agent_type => 'standalone'
+#    app_type   => 'mysql',
+#    args => {
+#      'SPM_MONITOR_MYSQL_DB_USER' => 'mysql-user',
+#      'SPM_MONITOR_MYSQL_DB_PASSWORD' => 'mysql-password',
+#    }
+#  }
+#
+#  class { 'spm_monitor::configure':
+#    monitoring_token  => 'MONITORING_TOKEN',
+#    infra_token  => 'INFRA_TOKEN',
+#    agent_type => 'standalone'
+#    app_type   => 'elasticsearch',
+#    args => {
+#      'SPM_MONITOR_ES_NODE_HOSTPORT' => 'localhost:9200',
+#    }
+#  }
+#
+#  class { 'spm_monitor::configure':
+#    monitoring_token  => 'MONITORING_TOKEN',
+#    infra_token  => 'INFRA_TOKEN',
+#    agent_type => 'standalone'
+#    app_type   => 'zookeeper',
+#    args => {
+#      'jmx_host' => 'localhost',
+#      'jmx_port' => '3000',
+#    }
+#  }
+#
+#  class { 'spm_monitor::configure':
+#    monitoring_token  => 'MONITORING_TOKEN',
+#    infra_token  => 'INFRA_TOKEN',
+#    agent_type => 'standalone'
+#    app_type   => 'kafka',
+#    args => {
+#      'app_subtype' => 'kafka-broker',
+#      'jmx_host' => 'localhost',
+#      'jmx_port' => '3000',
+#    }
 #  }
 #
 # === Copyright
 #
-# Copyright 2016 Sematext
+# Copyright 2018 Sematext
 #
 
-define spm_monitor::configure (
-  $spm_token = undef,
-  $spm_type = undef,
-  $apache_stats_url = 'http://localhost/server-status?auto',
-  $apache_user = undef,
-  $apache_pass = undef,
-  $haproxy_stats_url = 'http://localhost/haproxy_stats;csv',
-  $java_app_type = 'jvm',
-  $java_app_subtype = undef,
-  $java_jvm_name = 'default',
-  $java_tracing = undef,
-  $java_jmx_params = undef,
-  $memcached_port = 11211,
-  $mysql_user = 'spm-user',
-  $mysql_pass = 'spm-password',
-  $mysql_host = 'localhost',
-  $mysql_port = 3306,
-  $nginx_stats_url = 'http://localhost/nginx_status',
-  $nginx_user = undef,
-  $nginx_pass = undef,
-  $nginx_plus_stats_url = 'http://localhost/status',
+class spm_monitor::configure (
+  String $monitoring_token,
+  String $infra_token,
+  Optional[String] $agent_type = 'standalone',
+  String $app_type,
+  Optional[String] $app_name = 'default',
+  Optional[Hash] $args = undef,
+
 ){
-  validate_string($spm_token)
-  validate_string($spm_type)
-  validate_string($apache_stats_url)
-  validate_string($apache_user)
-  validate_string($apache_pass)
-  validate_string($haproxy_stats_url)
-  validate_string($java_app_type)
-  validate_string($java_app_subtype)
-  validate_string($java_jvm_name)
-  validate_integer($memcached_port)
-  validate_string($mysql_user)
-  validate_string($mysql_pass)
-  validate_string($mysql_host)
-  validate_integer($mysql_port)
-  validate_string($nginx_stats_url)
-  validate_string($nginx_plus_stats_url)
+  if $args == undef {
+    $command = "/opt/spm/bin/setup-sematext \\
+      --monitoring-token ${ monitoring_token } \\
+      --infra-token ${ infra_token } \\
+      --agent-type ${ agent_type } \\
+      --app-type ${ app_type }"
 
-  if $spm_token == undef {
-    fail("spm_token is mandatory")
-  }
-  if $spm_type == undef {
-    fail("spm_token is mandatory")
-  }
+    $config = "/opt/spm/spm-monitor/conf/spm-monitor-config-${ monitoring_token }-${ app_name }.properties"
 
-  case $spm_type {
-    'apache': {
-      spm_monitor::configure::apache { "${spm_token}":
-        spm_token => $spm_token,
-        stats_url => $apache_stats_url,
-        user => $apache_user,
-        pass => $apache_pass
+    exec { "${command}":
+      creates => $config,
+    }
+  }
+  else {
+    $extra_args = $args
+      .map |$key, $value| { "--${key} ${value}" }
+      .join(' ')
+
+    if !has_key($args, 'app_subtype') {
+      $command = "/opt/spm/bin/setup-sematext \\
+        --monitoring-token ${ monitoring_token } \\
+        --infra-token ${ infra_token } \\
+        --agent-type ${ agent_type } \\
+        --app-type ${ app_type } \\
+        ${extra_args}"
+
+      $config = "/opt/spm/spm-monitor/conf/spm-monitor--config-${ monitoring_token }-${ app_name }.properties"
+
+      exec { "${command}":
+        creates => $config,
       }
     }
-    'haproxy': {
-      spm_monitor::configure::haproxy { "${spm_token}":
-        spm_token => $spm_token,
-        stats_url => $haproxy_stats_url
+    else {
+      $app_subtype = $args['app_subtype']
+
+      $command = "/opt/spm/bin/setup-sematext \\
+        --monitoring-token ${ monitoring_token } \\
+        --infra-token ${ infra_token } \\
+        --agent-type ${ agent_type } \\
+        --app-subtype ${ app_subtype } \\
+        --app-type ${ app_type } \\
+        ${extra_args}"
+
+      $config = "/opt/spm/spm-monitor/conf/spm-monitor-${ app_subtype }-config-${ monitoring_token }-${ app_name }.properties"
+
+      exec { "${command}":
+        creates => $config,
       }
     }
-    'memcached': {
-      spm_monitor::configure::memcached { "${spm_token}":
-        spm_token => $spm_token,
-        port => $memcached_port
-      }
-    }
-    'mysql': {
-      spm_monitor::configure::mysql { "${spm_token}":
-        spm_token => $spm_token,
-        user => $mysql_user,
-        pass => $mysql_pass,
-        host => $mysql_host,
-        port => $mysql_port
-      }
-    }
-    'nginx': {
-      spm_monitor::configure::nginx { "${spm_token}":
-        spm_token => $spm_token,
-        stats_url => $nginx_stats_url,
-        user => $nginx_user,
-        pass => $nginx_pass
-      }
-    }
-    'nginx-plus': {
-      spm_monitor::configure::nginxplus { "${spm_token}":
-        spm_token => $spm_token,
-        stats_url => $nginx_plus_stats_url
-      }
-    }
-    'javaagent': {
-      spm_monitor::configure::javaagent { "${spm_token}-${java_app_type}-${java_jvm_name}":
-        spm_token => $spm_token,
-        app_type => $java_app_type,
-        app_subtype => $java_app_subtype,
-        jvm_name => $java_jvm_name,
-        tracing => $java_tracing
-      }
-    }
-    'standalone': {
-      spm_monitor::configure::standalone { "${spm_token}-${java_app_type}-${java_jvm_name}":
-        spm_token => $spm_token,
-        app_type => $java_app_type,
-        app_subtype => $java_app_subtype,
-        jvm_name => $java_jvm_name,
-        jmx_params => $java_jmx_params,
-        tracing => $java_tracing
-      }
-    }
-    default: { fail("Unsupported SPM application type: ${$spm_type}") }
   }
 }
-
