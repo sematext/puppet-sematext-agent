@@ -1,9 +1,18 @@
+# == Class: spm_monitor::install
+#
+# Installs SPM Monitor on Debian.
+#
+# === Copyright
+#
+# Copyright 2019 Sematext
+#
+
 class spm_monitor::install::debian() {
   include apt
 
   apt::source { 'sematext':
-    comment  => 'Sematext Repo',
     ensure   => present,
+    comment  => 'Sematext Repo',
     location => 'http://pub-repo.sematext.com/debian',
     release  => 'sematext',
     repos    => 'main',
@@ -19,8 +28,8 @@ class spm_monitor::install::debian() {
   }
 
   service { 'spm-monitor':
-    enable  => true,
     ensure  => running,
+    enable  => true,
     require => Package['spm-client'],
   }
 }

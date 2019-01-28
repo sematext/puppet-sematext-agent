@@ -71,14 +71,14 @@
 #
 # === Copyright
 #
-# Copyright 2018 Sematext
+# Copyright 2019 Sematext
 #
 
 class spm_monitor::configure (
   String $monitoring_token,
   String $infra_token,
-  Optional[String] $agent_type = 'standalone',
   String $app_type,
+  Optional[String] $agent_type = 'standalone',
   Optional[String] $app_name = 'default',
   Optional[Hash] $args = undef,
 
@@ -92,7 +92,7 @@ class spm_monitor::configure (
 
     $config = "/opt/spm/spm-monitor/conf/spm-monitor-config-${ monitoring_token }-${ app_name }.properties"
 
-    exec { "${command}":
+    exec { $command:
       creates => $config,
     }
   }
@@ -111,7 +111,7 @@ class spm_monitor::configure (
 
       $config = "/opt/spm/spm-monitor/conf/spm-monitor-config-${ monitoring_token }-${ app_name }.properties"
 
-      exec { "${command}":
+      exec { $command:
         creates => $config,
       }
     }
@@ -128,7 +128,7 @@ class spm_monitor::configure (
 
       $config = "/opt/spm/spm-monitor/conf/spm-monitor-${ app_subtype }-config-${ monitoring_token }-${ app_name }.properties"
 
-      exec { "${command}":
+      exec { $command:
         creates => $config,
       }
     }

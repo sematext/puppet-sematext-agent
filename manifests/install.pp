@@ -12,17 +12,17 @@
 #
 # === Copyright
 #
-# Copyright 2016 Sematext
+# Copyright 2019 Sematext
 #
 
 class spm_monitor::install {
-  case $operatingsystem {
+  case $::os['name'] {
     'Amazon': { include spm_monitor::install::centos }
     'CentOS': { include spm_monitor::install::centos }
     'RedHat': { include spm_monitor::install::redhat }
     'Debian': { include spm_monitor::install::debian }
     'Ubuntu': { include spm_monitor::install::ubuntu }
-    default:  { fail("Unsupported operatingsystem: ${operatingsystem}") }
+    default:  { fail("Unsupported OS: ${::os['name']}") }
   }
 }
 
