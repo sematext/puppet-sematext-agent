@@ -10,7 +10,7 @@
 # [*infra_token*]
 #   Infra Token unique to each account
 #
-# [*app_type*]
+# [*agent_type*]
 #   Agent type (standalone, javaagent)
 #
 # [*app_type*]
@@ -109,7 +109,7 @@ class spm_monitor::configure (
         --app-type ${ app_type } \\
         ${extra_args}"
 
-      $config = "/opt/spm/spm-monitor/conf/spm-monitor--config-${ monitoring_token }-${ app_name }.properties"
+      $config = "/opt/spm/spm-monitor/conf/spm-monitor-config-${ monitoring_token }-${ app_name }.properties"
 
       exec { "${command}":
         creates => $config,
@@ -122,8 +122,8 @@ class spm_monitor::configure (
         --monitoring-token ${ monitoring_token } \\
         --infra-token ${ infra_token } \\
         --agent-type ${ agent_type } \\
-        --app-subtype ${ app_subtype } \\
         --app-type ${ app_type } \\
+        --app-subtype ${ app_subtype } \\
         ${extra_args}"
 
       $config = "/opt/spm/spm-monitor/conf/spm-monitor-${ app_subtype }-config-${ monitoring_token }-${ app_name }.properties"
