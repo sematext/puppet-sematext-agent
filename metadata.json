@@ -1,6 +1,6 @@
 {
   "name": "sematext-spm_monitor",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Ciprian Hacman (<ciprian.hacman@sematext.com>)",
   "summary": "Install and configure Sematext Infra & App Agent",
   "license": "Apache-2.0",
