@@ -1,6 +1,6 @@
 # == Class: spm_monitor::install
 #
-# Installs SPM Monitor on Ubuntu.
+# Installs Sematext Infra & App agents on Ubuntu.
 #
 # === Copyright
 #

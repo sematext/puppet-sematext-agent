@@ -10,7 +10,7 @@
 
 ## Description
 
-The spm_monitor module can install and configure Sematext SPM Monitor on
+The spm_monitor module can install and configure Sematext Infra & App agents on
 CentOS, RedHat, Debian and Ubuntu systems.
 
 ## Install
@@ -24,7 +24,7 @@ Install `spm_monitor` as a module in your Puppet master's module path.
 
 ### Using the `spm_monitor::install` Class
 
-To install SPM Monitor, just declare the spm_monitor::install class.
+To install Sematext Infra & App agents, just declare the spm_monitor::install class.
 
 ```puppet
 include 'spm_monitor::install'
@@ -38,7 +38,7 @@ class { 'spm_monitor::install':}
 
 ### Using the `spm_monitor::configure` Class
 
-To configure SPM Monitor, you need to declare the spm_monitor::configure class
+To configure Sematext Infra & App agents, you need to declare the spm_monitor::configure class
 with the correct parameters for the application type.
 
 ``` puppet

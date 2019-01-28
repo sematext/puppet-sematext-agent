@@ -1,6 +1,6 @@
 # == Class: spm_monitor::install
 #
-# Installs SPM Monitor on CentOS.
+# Installs Sematext Infra & App agents on CentOS.
 #
 # === Copyright
 #

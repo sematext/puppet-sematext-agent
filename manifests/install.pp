@@ -1,6 +1,6 @@
 # == Class: spm_monitor::install
 #
-# Installs SPM Monitor on supported OSes.
+# Installs Sematext Infra & App agents on supported OSes.
 #
 # === Examples
 #

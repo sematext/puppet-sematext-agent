@@ -2,7 +2,7 @@
   "name": "sematext-spm_monitor",
   "version": "1.0.0",
   "author": "Ciprian Hacman (<ciprian.hacman@sematext.com>)",
-  "summary": "Install and configure SPM Monitor",
+  "summary": "Install and configure Sematext Infra & App Agent",
   "license": "Apache-2.0",
   "source": "http://sematext.com",
   "project_page": "http://sematext.com",
@@ -49,7 +49,7 @@
       "version_requirement": ">= 4.10.0 < 7.0.0"
     }
   ],
-  "description": "This will install and configure the Sematextext SPM Monitor. Sign up and get your SPM Token at: https://apps.sematext.com",
+  "description": "This will install and configure the Sematext Sematext Infra & App Agent. Sign up and get your Infra and App tokens at: https://apps.sematext.com",
   "pdk-version": "1.8.0",
   "template-url": "file:///opt/puppetlabs/pdk/share/cache/pdk-templates.git",
   "template-ref": "1.8.0-0-g0d9da00"

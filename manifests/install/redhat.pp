@@ -1,6 +1,6 @@
 # == Class: spm_monitor::install
 #
-# Installs SPM Monitor on RedHat.
+# Installs Sematext Infra & App agents on RedHat.
 #
 # === Copyright
 #

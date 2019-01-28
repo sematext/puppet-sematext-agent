@@ -1,6 +1,6 @@
 # == Class: spm_monitor::install
 #
-# Installs SPM Monitor on Debian.
+# Installs Sematext Infra & App agents on Debian.
 #
 # === Copyright
 #
