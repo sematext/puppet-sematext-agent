@@ -1,15 +1,17 @@
 {
   "name": "sematext-spm_monitor",
-  "version": "0.8.0",
+  "version": "1.0.0",
   "author": "Ciprian Hacman (<ciprian.hacman@sematext.com>)",
-  "summary": "Install and configure SPM Monitor",
-  "description": "This will install and configure the Sematextext SPM Monitor. Sign up and get your SPM Token at: https://apps.sematext.com",
-  "license": "Apache 2.0",
+  "summary": "Install and configure Sematext Infra & App Agent",
+  "license": "Apache-2.0",
   "source": "http://sematext.com",
   "project_page": "http://sematext.com",
   "issues_url": "http://sematext.com",
   "dependencies": [
-    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
+    {
+      "name": "puppetlabs-stdlib",
+      "version_requirement": ">= 4.0.0 <= 5.2.0"
+    }
   ],
   "operatingsystem_support": [
     {
@@ -29,16 +31,26 @@
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
-        "7",
-        "8"
+        "8",
+        "9"
       ]
     },
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
-        "12.04",
-        "14.04"
+        "16.04",
+        "18.04"
       ]
     }
-  ]
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 4.10.0 < 7.0.0"
+    }
+  ],
+  "description": "This will install and configure the Sematext Sematext Infra & App Agent. Sign up and get your Infra and App tokens at: https://apps.sematext.com",
+  "pdk-version": "1.8.0",
+  "template-url": "file:///opt/puppetlabs/pdk/share/cache/pdk-templates.git",
+  "template-ref": "1.8.0-0-g0d9da00"
 }
