@@ -43,44 +43,44 @@ with the correct parameters for the application type.
 
 ``` puppet
 class { 'spm_monitor::configure':
-  monitoring_token  => 'MONITORING_TOKEN',
-  infra_token  => 'INFRA_TOKEN',
-  agent_type => 'standalone'
-  app_type   => 'mysql',
-  args => {
-    'SPM_MONITOR_MYSQL_DB_USER' => 'mysql-user',
+  'monitoring_token' => 'MONITORING_TOKEN',
+  'infra_token'      => 'INFRA_TOKEN',
+  'agent_type'       => 'standalone'
+  'app_type'         => 'mysql',
+  'agent_args'       => {
+    'SPM_MONITOR_MYSQL_DB_USER'     => 'mysql-user',
     'SPM_MONITOR_MYSQL_DB_PASSWORD' => 'mysql-password',
   }
 }
 
 class { 'spm_monitor::configure':
-  monitoring_token  => 'MONITORING_TOKEN',
-  infra_token  => 'INFRA_TOKEN',
-  agent_type => 'standalone'
-  app_type   => 'elasticsearch',
-  args => {
+  'monitoring_token' => 'MONITORING_TOKEN',
+  'infra_token'      => 'INFRA_TOKEN',
+  'agent_type'       => 'standalone'
+  'app_type'         => 'elasticsearch',
+  'agent_args'       => {
     'SPM_MONITOR_ES_NODE_HOSTPORT' => 'localhost:9200',
   }
 }
 
 class { 'spm_monitor::configure':
-  monitoring_token  => 'MONITORING_TOKEN',
-  infra_token  => 'INFRA_TOKEN',
-  agent_type => 'standalone'
-  app_type   => 'zookeeper',
-  args => {
+  'monitoring_token' => 'MONITORING_TOKEN',
+  'infra_token'      => 'INFRA_TOKEN',
+  'agent_type'       => 'standalone'
+  'app_type'         => 'zookeeper',
+  'agent_args'       => {
     'jmx_host' => 'localhost',
     'jmx_port' => '3000',
   }
 }
 
 class { 'spm_monitor::configure':
-  monitoring_token  => 'MONITORING_TOKEN',
-  infra_token  => 'INFRA_TOKEN',
-  agent_type => 'standalone'
-  app_type   => 'kafka',
-  args => {
-    'app_subtype' => 'kafka-broker',
+  'monitoring_token' => 'MONITORING_TOKEN',
+  'infra_token'      => 'INFRA_TOKEN',
+  'agent_type'       => 'standalone'
+  'app_type'         => 'kafka',
+  'app_subtype'      => 'kafka-broker',
+  'agent_args' => {
     'jmx_host' => 'localhost',
     'jmx_port' => '3000',
   }
